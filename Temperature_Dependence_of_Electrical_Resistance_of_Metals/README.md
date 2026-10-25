@@ -36,22 +36,6 @@ The temperature coefficient can be estimated using experimental measurements of 
 - NumPy
 - Matplotlib
 
-## Project Structure
-
-```text
-Temperature-Dependence-of-Resistance/
-│
-├── data/
-│   └── experimental_data.csv
-│
-├── plots/
-│   └── resistance_vs_temperature.png
-│
-├── main.py
-└── README.md
-```
-
-*Note: The directory structure above is a suggested organization for the project.*
 
 ## Methodology
 
