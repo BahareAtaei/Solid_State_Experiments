@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #---------------------
 
 # import data
-df = pd.read_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\Session1\Initial_Data.csv")
+df = pd.read_csv(r"https://raw.githubusercontent.com/BahareAtaei/Solid_State_Experiments/refs/heads/main/Temperature_Dependence_of_Electrical_Resistance_of_Metals/Initial_Dataset.csv")
 print("********** Initial Data **********")
 print('')
 print(df.info())
@@ -59,4 +59,4 @@ plt.tight_layout()
 plt.show()
 
 #-----------------------
-df.to_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\Session1\Final_Dataset.csv", index=False)
+# df.to_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\Session1\Final_Dataset.csv", index=False)
