@@ -6,30 +6,50 @@ import matplotlib.pyplot as plt
 
 # import data
 df = pd.read_csv(r"https://raw.githubusercontent.com/BahareAtaei/Solid_State_Experiments/refs/heads/main/Temperature_Dependence_of_Electrical_Resistance_of_Metals/Initial_Dataset.csv")
-print("********** Initial Data **********")
+df_vu = pd.read_csv(r"https://raw.githubusercontent.com/BahareAtaei/Solid_State_Experiments/refs/heads/main/Temperature_Dependence_of_Electrical_Resistance_of_Metals/Initial_Data_VU.csv")
+print("********** Initial Data (EXPERIMENT Data)**********")
 print('')
 print(df.info())
+print('='*50)
+print('')
+print("********** Initial Data (VU Data)**********")
+print('')
+print(df_vu.info())
 print('='*50)
 print('')
 #--------------------
 
-# making new columns
+# making new columns in *EXPERIMENT DATA*
 df["T(K)"] = df["theta(degree)"] + 273.15
 df["L2(cm)"] = 100 - df["L1(cm)"]
 df["R(ohm)"] = (df["L2(cm)"] * 101) / df["L1(cm)"]
+
+
+# making new columns in *VU DATA*
+df_vu["T(K)"] = df_vu["theta(degree)"] + 273.15
+df_vu["L2(cm)"] = 100 - df_vu["L1(cm)"]
+df_vu["R(ohm)"] = (df_vu["L2(cm)"] * 101) / df_vu["L1(cm)"]
 #--------------------------
 
-# data information after making new columns
-print("********** Data After Feature Extraction **********")
+# data information after making new columns in EXPERIMENT DATA
+print("********** Data After Feature Extraction (EXPERIMENT DATA)**********")
 print('')
 print(df.info())
 print('='*50)
 print('')
+
+# data information after making new columns in VU DATA
+print("********** Data After Feature Extraction (VU DATA)**********")
+print('')
+print(df_vu.info())
+print('='*50)
+print('')
 #----------------------------
 
-# plot the results
-print("********** Plot The Results **********")
+# plot the results in EXPERIMENT DATA
+print("********** Plot The Results (EXPERIMENT DATA)**********")
 fig, axes = plt.subplots(1, 2, figsize=(8, 8))
+fig.suptitle("EXPERIMENT DATA PLOT")
 
 x0 = df["T(K)"]
 y0 = df["R(ohm)"]
@@ -59,4 +79,42 @@ plt.tight_layout()
 plt.show()
 
 #-----------------------
-# df.to_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\Session1\Final_Dataset.csv", index=False)
+# # df.to_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\Session1\Final_Dataset.csv", index=False)
+# df_final = pd.read_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\session1\Final_Dataset.csv")
+# print(df_final.to_string())
+#----------------------------------
+
+# plot the results in VU DATA
+print("********** Plot The Results (VU DATA)**********")
+fig, axes = plt.subplots(1, 2, figsize=(8, 8))
+fig.suptitle("VU DATA PLOT")
+
+x0 = df_vu["T(K)"]
+y0 = df_vu["R(ohm)"]
+m, b = np.polyfit(x0, y0, 1)
+axes[0].scatter(df_vu["T(K)"], df_vu["R(ohm)"], color="blue", label='Raw Data')
+axes[0].plot(x0, m*x0+b, color='red', ls='--', label='Fit Line')
+axes[0].set_title(r"R($\Omega$) Vs T(K)")
+axes[0].text(x0.mean(), m*x0.mean()+b, f"y = {m:.3f}x + {b:.3f}")
+axes[0].set_xlabel("T(K)")
+axes[0].set_ylabel(r"R($\Omega$)")
+axes[0].legend()
+axes[0].grid(alpha=0.5, ls='--')
+
+x1 = df_vu["theta(degree)"]
+y1 = df_vu["R(ohm)"]
+m, b = np.polyfit(x1, y1, 1)
+axes[1].scatter(df_vu["theta(degree)"], df_vu["R(ohm)"], color="blue", label='Raw Data')
+axes[1].plot(x1, m*x1+b, color='red', ls='--', label='Fit Line')
+axes[1].set_title(r"R($\Omega$) Vs T($^\circ C$)")
+axes[1].text(x1.mean(), m*x1.mean()+b, f"y = {m:.3f}x + {b:.3f}")
+axes[1].set_xlabel(r"T($^\circ C$)")
+axes[1].set_ylabel(r"R($\Omega$)")
+axes[1].legend()
+axes[1].grid(alpha=0.5, ls='--')
+
+plt.tight_layout()
+plt.show()
+
+# df_vu.to_csv(r"C:\Users\Sisto\Documents\Library\FUM\Solid State Az\session1\Final_Data_VU.csv", index=False)
+# print(df_vu.to_string())
